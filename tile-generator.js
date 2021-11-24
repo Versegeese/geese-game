@@ -2,7 +2,7 @@
 class Tile_Generator {
     constructor(context) {
         this.tiles_files = [
-            {texture: "assets/tile_map.png", bump: "assets/bump_map.png"},  // 0
+            {texture: "assets/tiles/tile_map.png", bump: "assets/tiles/bump_map.png"},  // 0
         ];
         // Generate map such that the first row is the topmost row of tiles in worldspace
         // Since we generate tiles starting from (0,0,0) (which is the first value in the Row 1 array)
