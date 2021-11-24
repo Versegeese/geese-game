@@ -2,8 +2,8 @@
 // This is a derived class for a Chonk,
 // a chonky, high defense, low movement character.
 class Chonk extends Goose {
-    constructor(goose_id, x, z, orientation) { 
-        super ( goose_id, x, z, orientation );
+    constructor(goose_id, x, z, orientation) {
+        super(goose_id, x, z, orientation);
         this.stats.attack = 50;
         this.stats.defense = 50;
         this.stats.movement_range = 3;
@@ -18,15 +18,15 @@ class Chonk extends Goose {
 
 
         //Overwrite these initial transforms.
-        this.transforms[neck]         = Mat4.identity().times(Mat4.translation([ -0.4, 0, 0])).times(Mat4.rotation( Math.PI/2, Vec.of(1,0,0))).times(Mat4.scale([ 1, 1, 0.8])); // 'neck'
-        this.transforms[left_wing]    = Mat4.identity().times(Mat4.translation([ -7, -7.5,-3])).times(Mat4.scale([ 1.2, 1.2,-1.2])); // 'left_wing'
-        this.transforms[body]         = Mat4.identity().times(Mat4.translation([ -6, -7.5, 3])).times(Mat4.scale([ 1, 1.3, 3])); // 'body'
-        this.transforms[marker_strip] = Mat4.identity().times(Mat4.translation([-1,-2.625,0])).times(Mat4.rotation(Math.PI/14, Vec.of(0,0,1))).times(Mat4.translation([-3.2,0,0])).times(Mat4.scale([4, 0.01, 0.5])), //'marker_strip'
-        this.transforms[right_wing]   = Mat4.identity().times(Mat4.translation([ -7, -7.5, 3])).times(Mat4.scale([ 1.2, 1.2, 1.2])); // 'right_wing''
+        this.transforms[neck] = Mat4.identity().times(Mat4.translation([-0.4, 0, 0])).times(Mat4.rotation(Math.PI / 2, Vec.of(1, 0, 0))).times(Mat4.scale([1, 1, 0.8])); // 'neck'
+        this.transforms[left_wing] = Mat4.identity().times(Mat4.translation([-7, -7.5, -3])).times(Mat4.scale([1.2, 1.2, -1.2])); // 'left_wing'
+        this.transforms[body] = Mat4.identity().times(Mat4.translation([-6, -7.5, 3])).times(Mat4.scale([1, 1.3, 3])); // 'body'
+        this.transforms[marker_strip] = Mat4.identity().times(Mat4.translation([-1, -2.625, 0])).times(Mat4.rotation(Math.PI / 14, Vec.of(0, 0, 1))).times(Mat4.translation([-3.2, 0, 0])).times(Mat4.scale([4, 0.01, 0.5])); //'marker_strip'
+        this.transforms[right_wing] = Mat4.identity().times(Mat4.translation([-7, -7.5, 3])).times(Mat4.scale([1.2, 1.2, 1.2])); // 'right_wing''
 
         // Add 'attack_ball.'
         this.shapes['attack_ball' + '_' + this.constructor.name + goose_id] = new Subdivision_Sphere(4);
-        this.transforms['attack_ball' + '_' + this.constructor.name + goose_id] = Mat4.translation([-4,-4.625,0]);
+        this.transforms['attack_ball' + '_' + this.constructor.name + goose_id] = Mat4.translation([-4, -4.625, 0]);
         this.colors['attack_ball' + '_' + this.constructor.name + goose_id] = 'white';
 
         this.head_pos = [0, 0];
@@ -46,7 +46,7 @@ class Chonk extends Goose {
             this.state.frameNumber = t_frames;
             this.rot_factor = 0.0;
         }
-            
+
         let tag = '_' + this.constructor.name + this.stats.goose_id;
         let head = 'head' + tag;
         let left_eyebrow = 'left_eyebrow' + tag;
@@ -61,85 +61,81 @@ class Chonk extends Goose {
         let right_wing = 'right_wing' + tag;
         let attack_ball = 'attack_ball' + tag;
 
-        let ball_factor = Math.pow(4.625, 1/60);
-        let size_factor = Math.pow(4.625/3.5, 1/60);
+        let ball_factor = Math.pow(4.625, 1 / 60);
+        let size_factor = Math.pow(4.625 / 3.5, 1 / 60);
 
         if (this.state.frameNumber == 120 && !this.state.game_over) {
             this.attack_sound.play();
         }
 
-        if (this.state.frameNumber > t_frames * 18/20) {
-            this.transforms[left_eyebrow] = Mat4.translation([ 0.5, 0.75,-0.4])
-                .times(Mat4.rotation( Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.rotation( Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation( Math.PI / 100 / 1.2, Vec.of(1,0,0)))
-                .times(Mat4.rotation(-Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation(-Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.translation([ -0.5, -0.75, 0.4]))
+        if (this.state.frameNumber > t_frames * 18 / 20) {
+            this.transforms[left_eyebrow] = Mat4.translation([0.5, 0.75, -0.4])
+                .times(Mat4.rotation(Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.rotation(Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(Math.PI / 100 / 1.2, Vec.of(1, 0, 0)))
+                .times(Mat4.rotation(-Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(-Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.translation([-0.5, -0.75, 0.4]))
                 .times(this.transforms[left_eyebrow]);
 
-            this.transforms[right_eyebrow] = Mat4.translation([ 0.5, 0.75, 0.4])
-                .times(Mat4.rotation(-Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.rotation( Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation(-Math.PI / 100 / 1.2, Vec.of(1,0,0)))
-                .times(Mat4.rotation(-Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation( Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.translation([ -0.5, -0.75,-0.4]))
+            this.transforms[right_eyebrow] = Mat4.translation([0.5, 0.75, 0.4])
+                .times(Mat4.rotation(-Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.rotation(Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(-Math.PI / 100 / 1.2, Vec.of(1, 0, 0)))
+                .times(Mat4.rotation(-Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.translation([-0.5, -0.75, -0.4]))
                 .times(this.transforms[right_eyebrow]);
-        }
-        else if (this.state.frameNumber > t_frames * 12/20) {
-            this.transforms[attack_ball] = Mat4.translation([-4,-4.625,0])
-                .times(Mat4.rotation(-this.rot_factor * Math.PI, Vec.of(0,0,1)))
+        } else if (this.state.frameNumber > t_frames * 12 / 20) {
+            this.transforms[attack_ball] = Mat4.translation([-4, -4.625, 0])
+                .times(Mat4.rotation(-this.rot_factor * Math.PI, Vec.of(0, 0, 1)))
                 .times(Mat4.scale([ball_factor, ball_factor, ball_factor]))
                 .times(Mat4.translation([4, 4.625, 0]))
                 .times(this.transforms[attack_ball]);
-                
+
             for (let t in this.transforms) {
                 if (t != attack_ball) {
-                    this.transforms[t] = Mat4.scale([1/size_factor, 1/size_factor, 1/size_factor])
+                    this.transforms[t] = Mat4.scale([1 / size_factor, 1 / size_factor, 1 / size_factor])
                         .times(this.transforms[t]);
                 }
                 this.transforms[t] = Mat4.translation([-4, -4.625, 0])
-                    .times(Mat4.rotation(-this.rot_factor * Math.PI, Vec.of(0,0,1)))
+                    .times(Mat4.rotation(-this.rot_factor * Math.PI, Vec.of(0, 0, 1)))
                     .times(Mat4.translation([4, 4.625, 0]))
                     .times(this.transforms[t]);
             }
-            this.rot_factor += (0.2/59);
-        }
-        else if (this.state.frameNumber > t_frames * 10/20) {
+            this.rot_factor += (0.2 / 59);
+        } else if (this.state.frameNumber > t_frames * 10 / 20) {
             let new_ball_pos = this.ball_pos + 0.75;
             for (let t in this.transforms) {
                 this.transforms[t] = Mat4.translation([-(4 - new_ball_pos), -4.625, 0])
-                    .times(Mat4.rotation(-this.rot_factor * Math.PI, Vec.of(0,0,1)))
+                    .times(Mat4.rotation(-this.rot_factor * Math.PI, Vec.of(0, 0, 1)))
                     .times(Mat4.translation([4 - this.ball_pos, 4.625, 0]))
                     .times(this.transforms[t]);
             }
             this.ball_pos = new_ball_pos;
-        }
-        else if (this.state.frameNumber > t_frames * 8/20) {            
+        } else if (this.state.frameNumber > t_frames * 8 / 20) {
             let new_ball_pos = this.ball_pos - 0.75;
             for (let t in this.transforms) {
                 this.transforms[t] = Mat4.translation([-(4 - new_ball_pos), -4.625, 0])
-                    .times(Mat4.rotation(this.rot_factor * Math.PI, Vec.of(0,0,1)))
+                    .times(Mat4.rotation(this.rot_factor * Math.PI, Vec.of(0, 0, 1)))
                     .times(Mat4.translation([4 - this.ball_pos, 4.625, 0]))
                     .times(this.transforms[t]);
             }
             this.ball_pos = new_ball_pos;
 
             this.state.inflict_damage_other = (this.state.frameNumber == t_frames / 2);
-        }
-        else if (this.state.frameNumber > t_frames * 2/20) {
-            this.rot_factor -= (0.2/59);
-            
-            this.transforms[attack_ball] = Mat4.translation([-4,-4.625,0])
-                .times(Mat4.rotation(this.rot_factor * Math.PI, Vec.of(0,0,1)))
-                .times(Mat4.scale([1/ball_factor, 1/ball_factor, 1/ball_factor]))
+        } else if (this.state.frameNumber > t_frames * 2 / 20) {
+            this.rot_factor -= (0.2 / 59);
+
+            this.transforms[attack_ball] = Mat4.translation([-4, -4.625, 0])
+                .times(Mat4.rotation(this.rot_factor * Math.PI, Vec.of(0, 0, 1)))
+                .times(Mat4.scale([1 / ball_factor, 1 / ball_factor, 1 / ball_factor]))
                 .times(Mat4.translation([4, 4.625, 0]))
                 .times(this.transforms[attack_ball]);
-            
+
             for (let t in this.transforms) {
                 this.transforms[t] = Mat4.translation([-4, -4.625, 0])
-                    .times(Mat4.rotation(this.rot_factor * Math.PI, Vec.of(0,0,1)))
+                    .times(Mat4.rotation(this.rot_factor * Math.PI, Vec.of(0, 0, 1)))
                     .times(Mat4.translation([4, 4.625, 0]))
                     .times(this.transforms[t]);
 
@@ -148,24 +144,23 @@ class Chonk extends Goose {
                         .times(this.transforms[t]);
                 }
             }
-        }
-        else {
-            this.transforms[left_eyebrow] = Mat4.translation([ 0.5, 0.75,-0.4])
-                .times(Mat4.rotation( Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.rotation( Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation(-Math.PI / 100 / 1.2, Vec.of(1,0,0)))
-                .times(Mat4.rotation(-Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation(-Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.translation([ -0.5, -0.75, 0.4]))
+        } else {
+            this.transforms[left_eyebrow] = Mat4.translation([0.5, 0.75, -0.4])
+                .times(Mat4.rotation(Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.rotation(Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(-Math.PI / 100 / 1.2, Vec.of(1, 0, 0)))
+                .times(Mat4.rotation(-Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(-Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.translation([-0.5, -0.75, 0.4]))
                 .times(this.transforms[left_eyebrow]);
 
-            this.transforms[right_eyebrow] = Mat4.translation([ 0.5, 0.75, 0.4])
-                .times(Mat4.rotation(-Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.rotation( Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation( Math.PI / 100 / 1.2, Vec.of(1,0,0)))
-                .times(Mat4.rotation(-Math.PI/4, Vec.of(0,0,1)))
-                .times(Mat4.rotation( Math.PI/6, Vec.of(0,1,0)))
-                .times(Mat4.translation([ -0.5, -0.75,-0.4]))
+            this.transforms[right_eyebrow] = Mat4.translation([0.5, 0.75, 0.4])
+                .times(Mat4.rotation(-Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.rotation(Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(Math.PI / 100 / 1.2, Vec.of(1, 0, 0)))
+                .times(Mat4.rotation(-Math.PI / 4, Vec.of(0, 0, 1)))
+                .times(Mat4.rotation(Math.PI / 6, Vec.of(0, 1, 0)))
+                .times(Mat4.translation([-0.5, -0.75, -0.4]))
                 .times(this.transforms[right_eyebrow]);
         }
 
@@ -177,7 +172,7 @@ class Chonk extends Goose {
 
         this.animate_reset();
     }
-    
+
 
     //Standard honk-like chonk attack.
     /*
@@ -398,32 +393,31 @@ class Chonk extends Goose {
 
         let left_wing = 'left_wing' + '_' + this.constructor.name + this.stats.goose_id;
         let right_wing = 'right_wing' + '_' + this.constructor.name + this.stats.goose_id;
-        if (this.state.frameNumber > t_frames/2) {
+        if (this.state.frameNumber > t_frames / 2) {
             let adjustment = 0.1 * (100 - this.state.frameNumber);
-            this.transforms[left_wing] = Mat4.translation([ -7,-4.5 + adjustment,3])
-                .times(Mat4.rotation(-Math.PI / t_frames, Vec.of(1,0,0)))
-                .times(Mat4.translation([ 7,4.5 - adjustment,-3]))
+            this.transforms[left_wing] = Mat4.translation([-7, -4.5 + adjustment, 3])
+                .times(Mat4.rotation(-Math.PI / t_frames, Vec.of(1, 0, 0)))
+                .times(Mat4.translation([7, 4.5 - adjustment, -3]))
                 .times(this.transforms[left_wing]);
-            this.transforms[right_wing] = Mat4.translation([ -7,-4.5 + adjustment,-3])
-                .times(Mat4.rotation(Math.PI / t_frames, Vec.of(1,0,0)))
-                .times(Mat4.translation([ 7,4.5 - adjustment,3]))
+            this.transforms[right_wing] = Mat4.translation([-7, -4.5 + adjustment, -3])
+                .times(Mat4.rotation(Math.PI / t_frames, Vec.of(1, 0, 0)))
+                .times(Mat4.translation([7, 4.5 - adjustment, 3]))
                 .times(this.transforms[right_wing]);
             for (let shape in this.transforms) {
-                this.transforms[shape] = Mat4.translation([0.1,0.1,0]).times(this.transforms[shape]);
+                this.transforms[shape] = Mat4.translation([0.1, 0.1, 0]).times(this.transforms[shape]);
             }
-        }
-        else {
+        } else {
             let adjustment = 0.1 * this.state.frameNumber;
-            this.transforms[left_wing] = Mat4.translation([ -7,-4.5 + adjustment,3])
-                .times(Mat4.rotation(Math.PI / t_frames, Vec.of(1,0,0)))
-                .times(Mat4.translation([ 7,4.5 - adjustment,-3]))
+            this.transforms[left_wing] = Mat4.translation([-7, -4.5 + adjustment, 3])
+                .times(Mat4.rotation(Math.PI / t_frames, Vec.of(1, 0, 0)))
+                .times(Mat4.translation([7, 4.5 - adjustment, -3]))
                 .times(this.transforms[left_wing]);
-            this.transforms[right_wing] = Mat4.translation([ -7,-4.5 + adjustment,-3])
-                .times(Mat4.rotation(-Math.PI / t_frames, Vec.of(1,0,0)))
-                .times(Mat4.translation([ 7,4.5 - adjustment,3]))
+            this.transforms[right_wing] = Mat4.translation([-7, -4.5 + adjustment, -3])
+                .times(Mat4.rotation(-Math.PI / t_frames, Vec.of(1, 0, 0)))
+                .times(Mat4.translation([7, 4.5 - adjustment, 3]))
                 .times(this.transforms[right_wing]);
             for (let shape in this.transforms) {
-                this.transforms[shape] = Mat4.translation([0.1,-0.1,0]).times(this.transforms[shape]);
+                this.transforms[shape] = Mat4.translation([0.1, -0.1, 0]).times(this.transforms[shape]);
             }
         }
 
